@@ -1,0 +1,20 @@
+todo-ddns:
+  list:
+    # 待处理的域名和子域名配置列表,可配置多个。platform取PlatformEnum内的枚举code
+    - platform: aliyun
+      accessId: yourAliyunAccessKeyId
+      accessSecret: yourAliyunAccessKeySecret
+      domainList:
+        - domainName: 域名,如:666.com
+          # 子域名Array,不配置时修改所有A类型的子域名
+          subDomains: www,gitlab,@
+    - platform: tencentcloud
+      accessId: yourTencentAccessId
+      accessSecret: yourTencentAccessSecret
+      domainList:
+        - domainName: 域名,如:666.com
+          subDomains: '@'
+# 腾讯云Api优先地址
+remote:
+  tencent-cloud:
+    region: ap-guangzhou

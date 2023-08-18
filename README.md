@@ -1,2 +1,3 @@
 # net-ddns
-ddns java
+ddns by java 
+支持：aliyun 腾讯云

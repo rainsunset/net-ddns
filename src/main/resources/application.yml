@@ -1,0 +1,26 @@
+application.server:
+  name: net-ddns
+
+server:
+  jetty:
+    threads:
+      # 最小线程数(默认8)
+      min: ${JETTY_THREADS_MIN:8}
+      # 最大线程数(请求量大的服务可调大, 默认200)
+      max: ${JETTY_THREADS_MAX:200}
+      # 线程空闲时间(超过此时间则回收, 请求量大的服务可调大, 降低线程回收的频率, 默认60000)
+      idle-timeout: ${JETTY_THREADS_IDEL_TIMEOUT:60000}
+
+spring:
+  application:
+    name: net-ddns
+  profiles:
+    active: prod
+
+log:
+  path: '.'
+
+remote:
+  tencent-cloud:
+    # https://cloud.tencent.com/document/api/1427/56187
+    region: ap-guangzhou

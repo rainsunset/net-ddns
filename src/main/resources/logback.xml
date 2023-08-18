@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+	<springProperty scope="context" name="LOG_PATH" source="log.path"/>
+	<property name="console.log.pattern"
+			  value="[%date] [%level] [%logger:%line] [%thread] traceLogid:[%X{TRACE_LOG_ID}] %msg%n"/>
+	<property name="file.log.pattern"
+			  value="[%date] [%level] [%logger:%line] [%thread] [%X{TRACE_LOG_ID}] %msg%n"/>
+
+	<!-- ==================== 控制台输出 ===================== -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${console.log.pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- INFO级别 -->
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH:-.}/net-ddns.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_PATH:-.}/net111-ddns-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>512MB</maxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${file.log.pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>512</queueSize>
+		<appender-ref ref="file" />
+	</appender>
+
+	<logger name="org.springframework.beans" level="WARN"/>
+	<logger name="springfox.documentation" level="WARN"/>
+	<logger name="org.springframework.boot.web.filter.OrderedRequestContextFilter" level="INFO"/>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="file" />
+	</root>
+
+</configuration>
